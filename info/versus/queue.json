@@ -1,0 +1,22 @@
+[
+  {
+    "map": "https://osu.ppy.sh/beatmapsets/38235#osu/124321",
+    "id": 1,
+    "replay_1": {
+      "output_name": "replay_1",
+      "cursor_size": 0.64,
+      "profile": "https://osu.ppy.sh/users/9676459",
+      "replay_path": "",
+      "replay_link": "https://drive.google.com/open?id=1FrBiiKLBVhcslAvOGNZz861oooxLHWug",
+      "skin": "forza nekiryay(CTL472mix)"
+    },
+    "replay_2": {
+      "output_name": "replay_2",
+      "cursor_size": 1.35,
+      "profile": "https://osu.ppy.sh/users/12086201",
+      "replay_path": "",
+      "replay_link": "",
+      "skin": "- Risukuma Skin2.2"
+    }
+  }
+]

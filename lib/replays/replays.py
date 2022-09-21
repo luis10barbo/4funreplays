@@ -12,8 +12,11 @@ class OsuReplayHandler():
     replay_path = ""
     replay_info:osrparse.Replay
     
-    def __init__(self, queue_entry:dict) -> None:
-        self.get_replay_from_queue(queue_entry)
+    def __init__(self, queue_entry:dict={}, replay_path:str="") -> None:
+        if replay_path == "":
+            self.get_replay_from_queue(queue_entry)
+        else:
+            self.replay_path = replay_path
         self.parse_replay()
         
     def get_replay_from_queue(self, queue_entry:dict):

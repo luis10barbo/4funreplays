@@ -20,10 +20,13 @@ def debug(message:str=""):
     PREFIX = "DEBUG: "
     logging.debug(f"{PREFIX}{message}")
 
-def info(message:str=""):
+def info(message:str="", notify:bool=False):
     PREFIX = f"INFO: "
     print(f"{PREFIX}{message}")
     logging.debug(f"{PREFIX}{message}")
+    
+    if notify == True:
+        win10toast.ToastNotifier().show_toast(TITLE, msg=f"{PREFIX}{message}")
 
 def warn(message:str=""):
     PREFIX = "WARNING: "

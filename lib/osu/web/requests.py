@@ -1,16 +1,33 @@
 import json
 import os
 import shutil
-import lib
+
+from PIL import Image
+from io import BytesIO
+
 from lib import logger
 
 import osrparse
 
 import requests
 
-from lib.paths import SECRETS_PATH, API_PATH, OSU_SECRETS_PATH
+from lib.paths import API_PATH, AVATAR_DOWNLOAD_PATH, REQUEST_FOLDER
 
-REQUEST_FOLDER = os.path.join(os.getcwd(), "info", "requests")
+def get_user_image(user_id) -> str:
+    """
+    Returns output path if sucessful, else None
+    """
+        
+    request_url = f"https://a.ppy.sh/{user_id}"
+    request_result = requests.get(request_url)
+    
+    image = Image.open(BytesIO(request_result.content))
+    output_path = os.path.join(AVATAR_DOWNLOAD_PATH, f"{user_id}.{image.format.lower()}")
+    
+    image.save(output_path)
+
+    logger.debug(f"User '{user_id}' avatar saved to {output_path}")
+    return output_path
 
 class OsuRequestHandler():
     api = ""
@@ -26,8 +43,7 @@ class OsuRequestHandler():
     def __init__(self, queue_information:dict[str,str], replay_information:osrparse.Replay, has_updated_spreadsheet:bool=True) -> None:
         self.get_api_from_secrets()
 
-        if has_updated_spreadsheet == True:
-            self.has_updated_spreadsheet = True
+        self.has_updated_spreadsheet = has_updated_spreadsheet
             
         self.set_queue_information(queue_information)
         self.set_replay_information(replay_information)
@@ -97,7 +113,13 @@ class OsuRequestHandler():
 
     def should_make_request(self, REQUEST_NAME:str) -> bool:
         output_path = os.path.join(REQUEST_FOLDER, f"{self.queue_entry['replay_id']}", f"{REQUEST_NAME}.json")
-        return (self.has_updated_spreadsheet == False) and (os.path.isfile(output_path) == False)
+        
+        if self.has_updated_spreadsheet == True:
+            return True
+
+        if os.path.isfile(output_path) == False:
+            return True
+        return False 
 
     def get_beatmap(self):
         self.check_api()
@@ -177,7 +199,7 @@ class OsuRequestHandler():
         
         if self.parsed_replay != None:
             # First check
-            user_id = self.queue_entry["profile"].split("users/")[1]
+            user_id = self.queue_entry["profile"].replace("/u/", "/users/").split("/users/")[1].split("/")[0]
             logger.info(f"Requesting user information from user with id {user_id}")
 
             self.player_info = json.loads(requests.get(url=REQUEST_URL, params={"k":self.api, "u":user_id}).text)

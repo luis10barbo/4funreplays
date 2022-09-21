@@ -2,3 +2,9 @@ photoshop-python-api
 pymiere
 osrparse==5.0.0
 win10toast
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib
+requests
+Pillow
+gdown

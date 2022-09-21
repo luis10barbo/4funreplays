@@ -1,15 +1,22 @@
 # from __future__ import print_function
 import os
+import requests
 from googleapiclient.discovery import build
 
 import json
 from google.oauth2 import service_account
 
 from lib import logger
+from lib.paths import QUEUE_OUTPUT
 
 MAIN_FOLDER = os.getcwd()
 AUTHORIZATION_FILE = os.path.join(MAIN_FOLDER, 'secrets', 'google', 'authorization.json')
-QUEUE_OUTPUT = os.path.join(MAIN_FOLDER, 'info', 'queue.json')
+
+def get_url(url):
+    # Check if beatmapset url is a redirect
+    response = requests.get(url, allow_redirects=True)
+
+    return response.url
 
 class api():
     SERVICE_ACCOUNT_FILE = f"{AUTHORIZATION_FILE}"
@@ -56,12 +63,13 @@ class api():
             if queue_entry == []:
                 pass
             queue.append(queue_template.copy())
-            queue[i]["profile"] = queue_entry[1]
-            queue[i]["map"] = queue_entry[2]
+            
+            queue[i]["profile"] = get_url(queue_entry[1])
+            queue[i]["map"] = get_url(queue_entry[2])
             queue[i]["skin"] = queue_entry[3]
             queue[i]['replay_id'] = i+1
             queue[i]["replay_link"] = queue_entry[4]
-            queue[i]["cursor_size"] = float(queue_entry[5])
+            queue[i]["cursor_size"] = float(queue_entry[5]) if len(queue_entry) > 5 else 1.00
             queue = queue.copy()
 
         with open(f'{QUEUE_OUTPUT}', 'w') as file:

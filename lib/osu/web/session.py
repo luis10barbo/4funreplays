@@ -89,17 +89,34 @@ class OsuSessionHandler:
     def download_beatmap(self, beatmapset_url, file_name) -> None:
         output_path = os.path.join(OSU_BEATMAPS_DOWNLOAD_PATH, file_name)
         
+        # Check if beatmapset url is a redirect
+        response = requests.get(beatmapset_url, allow_redirects=True)
+        if response.status_code == requests.codes.found:
+            logger.info(f"{beatmapset_url} leads to url {response.url}")
+            beatmapset_url = response.url
+
         download_url = f"{beatmapset_url}/download?noVideo=1" 
         
         headers = {"referer": beatmapset_url}
         
-        logger.info(f"Downloading Beatmap from {download_url}")
+        logger.info(f"Downloading Beatmap from {download_url} to {output_path}")
         response = self.session.get(download_url, headers=headers)
 
         if response.status_code == requests.codes.ok:
             logger.info("Download Sucessful")
             self.write_file(file_path=output_path, data=response.content)
             return output_path
+        
+        beatmapset_id = beatmapset_url.rsplit('/', 1)[1].replace('/', '')
+        download_url = f"https://beatconnect.io/b/{beatmapset_id}"
+        logger.info(f"Download from bancho failed, using mirror {download_url}")
+
+        response = requests.get(download_url)
+        if response.status_code == requests.codes.ok:
+            logger.info("Download Sucessful")
+            self.write_file(file_path=output_path, data=response.content)
+            return output_path
+
             
     def download_replay(self, replay_url:str, file_path:str):
         return logger.info(f"NOT WORKING YET {__name__}")
