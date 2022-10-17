@@ -72,11 +72,14 @@ class OsuFolderHandler:
         try:
             events_section: str = difficulty_file.split("[Events]")[
                 1].split("\n")
-            background = events_section[2].split(",")[2]
-            if background.startswith("\"") and background.endswith("\""):
-                background = background[1:][:-1]
-            else:
-                raise Exception()
+            for line in events_section:
+                if not line.startswith("0,0,"):
+                    continue
+                background = events_section[2].split(",")[2]
+                if background.startswith("\"") and background.endswith("\""):
+                    background = background[1:][:-1]
+                else:
+                    raise Exception()
         except:
             logger.info("No background found")
             return None
