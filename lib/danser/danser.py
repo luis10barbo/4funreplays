@@ -108,7 +108,7 @@ class OsuDanserHandler():
         video_name = f'{f"{video_prefix}_" if video_prefix != "" else ""}{video_name}'
 
         danser_arguments = (
-            f'danser.exe -skip -replay "{replay_path}" -skin "{skin_name}" -settings="{setting_name}" -out "{video_name}"')
+            f'danser-cli.exe -skip -replay "{replay_path}" -skin "{skin_name}" -settings="{setting_name}" -out "{video_name}"')
 
         executable_path = os.path.join(self.danser_path, "4funreplays.bat")
         with open(executable_path, "w") as file:
