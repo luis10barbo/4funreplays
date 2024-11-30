@@ -3,3 +3,6 @@ def debug(message: str):
 
 def error(message: str):
     print(f"ERROR: {message}")
+
+def warn(message: str):
+    print(f"WARNING: {message}")
