@@ -30,9 +30,10 @@ def parse_sheets_obr():
             "perfil": column[0],
             "mapa": column[1],
             "skin": column[2],
-            "replay": column[3],
-            "done": True if column[4] == "TRUE" else False,
-            "posted": True if column[5] == "TRUE" else False 
+            "skin_local": column[3],
+            "replay": column[4],
+            "done": True if column[5] == "TRUE" else False,
+            "posted": True if column[6] == "TRUE" else False 
         }
         columnsObr.append(columnObr)
     

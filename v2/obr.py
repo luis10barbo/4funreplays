@@ -4,7 +4,8 @@ from utils.replays_getter import get_replays_local_folder
 from danser.danser_functions import record
 from utils.google_sheets import parse_sheets_obr
 from utils.logger import error
-from osu.web.osu_session import download_beatmap, get_session
+from osu.web.osu_web import download_beatmap
+from utils.arguments_parser import parse_arguments
 def main():
     config: Config | None = get_config()
     if config is None:
@@ -17,13 +18,22 @@ def main():
         return
     
     replays = get_replays_local_folder()
-    for i, replay in enumerate(replays):
-        record(config, replay, str(i))
+    for replay in replays:
+        replay_number = int(replay.rsplit("\\", 1)[1].replace(".osr", ""))
+        column = sheet[replay_number]
+        if column["done"] is True or column["posted"] is True:
+            continue
 
-    session = get_session()
+        record(config, replay, str(replay_number), column["skin_local"])
+
+    arguments = parse_arguments()
+     
     for column in sheet:
-        print(column["mapa"])
-        download_beatmap(session, column["mapa"], file_name = f"{column["mapa"].rsplit('/', 1)[1]}.osz")
+        if column["done"] == True or column["posted"] is True:
+            continue
+        
+        if arguments.dl_maps is True: 
+            download_beatmap(column["mapa"], file_name = f"{column["mapa"].rsplit('/', 1)[1]}.osz")
 
 if __name__ == "__main__":
     main()
