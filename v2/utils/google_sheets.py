@@ -23,9 +23,12 @@ def parse_sheets_obr():
     
     columnsObr: list[ColumnSheetObr] = []
     debug("Parsing sheet using OBR standard")
-    for i, column in enumerate(parsed_columns):
-        if i == 0:
-            continue
+    for column in parsed_columns:
+        sliderbreaks: int | None = None
+        try:
+            sliderbreaks = int(column[10])
+        except:
+            pass
         columnObr: ColumnSheetObr = {
             "perfil": column[0],
             "mapa": column[1],
@@ -33,10 +36,14 @@ def parse_sheets_obr():
             "skin_local": column[3],
             "replay": column[4],
             "done": True if column[5] == "TRUE" else False,
-            "posted": True if column[6] == "TRUE" else False 
+            "posted": True if column[6] == "TRUE" else False,
+            "approved": True if column[7] == "TRUE" else False,
+            "o_que_seria": column[8],
+            "sliderbreaks": sliderbreaks
         }
         columnsObr.append(columnObr)
+        debug(str(column))
     
-    debug(f"Parsed {len(columnsObr) - 1} columns")
+    debug(f"Parsed {len(columnsObr)} columns")
     return columnsObr
         

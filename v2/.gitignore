@@ -1,3 +1,5 @@
 secrets/*
 secrets/
 config.json
+replays
+replays/*

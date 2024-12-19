@@ -9,3 +9,6 @@ class ColumnSheetObr(TypedDict):
     replay: str
     done: bool
     posted: bool
+    approved: bool
+    o_que_seria: str
+    sliderbreaks: int | None

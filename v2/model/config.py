@@ -14,11 +14,18 @@ class Config(TypedDict):
 def get_config():
     debug("Getting config")
 
-    args = parse_arguments() 
+    args = parse_arguments()
+    config: Config | None
     if args.new_cfg is True:
-        return create_config()
+        config = create_config()
     else:
-        return read_config()
+        config = read_config()
+
+    if config is None:
+        error("No config found")
+        raise Exception("No config found")
+    
+    return config
     
 
 def read_config():

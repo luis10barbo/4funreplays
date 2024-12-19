@@ -65,6 +65,10 @@ OSU_REPLAY_URL = "https://osu.ppy.sh/scores/mania/485188165"
 #         debug("Logged in at osu!")
 #     return session
 
+def get_pfp_url(profile_url: str):
+    user_id = profile_url.rsplit("/", 1)[1]
+    return f"https://a.ppy.sh/{user_id}"
+
 def write_file(file_path:str, data: Any) -> None:
     with open(file_path, "wb") as file:
         file.write(data)
