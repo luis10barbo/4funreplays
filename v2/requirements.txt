@@ -2,3 +2,5 @@ requests==2.32.3
 osrparse
 selenium
 rosu-pp-py
+pymiere
+setuptools

@@ -10,6 +10,7 @@ class Config(TypedDict):
     osu_path: str
     danser_path: str
     danser_config: str
+    premiere_path: str
 
 def get_config():
     debug("Getting config")
@@ -87,6 +88,6 @@ def create_config() -> Config | None:
         return None
     
     danser_config = os.path.basename(danser_config_path.name).replace(".json", "").strip()
-    config = Config(danser_path=danser_dir, danser_config=danser_config, osu_path=osu_dir)
+    config = Config(danser_path=danser_dir, danser_config=danser_config, osu_path=osu_dir, premiere_path=r"C:\Program Files\Adobe\Adobe Premiere Pro 2021\Adobe Premiere Pro.exe")
     save_config(config)
     return config

@@ -1,8 +1,10 @@
 
+import os
 import rosu_pp_py
 from description.description_obr import save_description_obr
 from model.config import get_config
 from osu.local.folder import get_beatmap_file_path_by_hash, read_osu_db
+from premiere.premiere import default_edit
 from thumb.thumb import save_thumbnail_obr
 from utils.osu import calculate_acc
 from utils.replays_getter import get_replays_local_folder
@@ -36,6 +38,7 @@ def main():
         # if replay_number != 8:
         #     continue
 
+        print(len(sheet), replay_number)
         column = sheet[replay_number]
         if column["posted"] or column["approved"] is False:
             continue
@@ -57,12 +60,17 @@ def main():
                                                 combo = parsed_replay.max_combo, misses = parsed_replay.count_miss, hitresult_priority = rosu_pp_py.HitResultPriority.BestCase)
             pp_data = performance.calculate(rosu_map)
             
-            video_title = None
+            map_data = osu_db.beatmaps[parsed_replay.beatmap_hash]
+            video_title =  f"{replay_number} - {parsed_replay.username} {map_data.song_title} [{map_data.difficulty}]".replace("\"", "").replace("'", "").replace("/", "")
+            video_title_with_actual_nickname = None
             if program_args.description:
-                video_title = save_description_obr(browser, column, parsed_replay, pp_data, osu_db.beatmaps[parsed_replay.beatmap_hash], replay_number, True)
+                video_title_with_actual_nickname = save_description_obr(browser, column, parsed_replay, pp_data, osu_db.beatmaps[parsed_replay.beatmap_hash], replay_number, True)
 
             if program_args.thumbnail:
-                save_thumbnail_obr(browser, column, parsed_replay, pp_data, osu_db.beatmaps[parsed_replay.beatmap_hash], replay_number, video_title)
+                save_thumbnail_obr(browser, column, parsed_replay, pp_data, osu_db.beatmaps[parsed_replay.beatmap_hash], replay_number, video_title_with_actual_nickname if video_title_with_actual_nickname else video_title)
+
+            if program_args.premiere:
+                default_edit(os.path.join(config["danser_path"], "videos", f"{replay_number}.mp4"), video_title)
             
     info("Finished replay recording and thumbnail saving")
     browser.quit()
