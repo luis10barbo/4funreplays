@@ -24,22 +24,22 @@ def parse_sheets_obr():
     columnsObr: list[ColumnSheetObr] = []
     debug("Parsing sheet using OBR standard")
     for column in parsed_columns:
-        sliderbreaks: int | None = None
-        try:
-            sliderbreaks = int(column[10])
-        except:
-            pass
+        # sliderbreaks: int | None = None
+        # try:
+        #     sliderbreaks = int(column[10])
+        # except:
+        #     pass
         columnObr: ColumnSheetObr = {
             "perfil": column[0],
             "mapa": column[1],
             "skin": column[2],
             "skin_local": column[3],
             "replay": column[4],
-            "done": True if column[5] == "TRUE" else False,
-            "posted": True if column[6] == "TRUE" else False,
-            "approved": True if column[7] == "TRUE" else False,
-            "o_que_seria": column[8],
-            "sliderbreaks": sliderbreaks
+            "approved": True if column[6] == "TRUE" else False,
+            "done": True if column[7] == "TRUE" else False,
+            "posted": True if column[8] == "TRUE" else False,
+            "o_que_seria": column[9],
+            "sliderbreaks": None
         }
         columnsObr.append(columnObr)
         debug(str(column))
