@@ -47,19 +47,19 @@ def read_osu_db():
             # important for the purpose of this database
             i = buffer.read_uint(db)
             for _ in range(i):
-                buffer.read_int_double(db)
+                buffer.read_int_float(db)
 
             i = buffer.read_uint(db)
             for _ in range(i):
-                buffer.read_int_double(db)
+                buffer.read_int_float(db)
 
             i = buffer.read_uint(db)
             for _ in range(i):
-                buffer.read_int_double(db)
+                buffer.read_int_float(db)
 
             i = buffer.read_uint(db)
             for _ in range(i):
-                buffer.read_int_double(db)
+                buffer.read_int_float(db)
 
             drain_time = buffer.read_uint(db)
             total_time = buffer.read_uint(db)
@@ -111,7 +111,10 @@ def get_beatmapset_path_by_hash(osu_db: OsuDb, beatmap_hash: str):
     return get_beatmapset_path_by_folder(osu_db.beatmaps[beatmap_hash].folder_name) 
 
 def get_beatmap_file_path_by_hash(osu_db: OsuDb, beatmap_hash: str):
-    beatmap = osu_db.beatmaps[beatmap_hash]
+    try:
+        beatmap = osu_db.beatmaps[beatmap_hash]
+    except:
+        raise Exception(f"Map {beatmap_hash} not found")
     return get_beatmap_difficulty_by_filename(os.path.join(config["osu_path"], "Songs", beatmap.folder_name), beatmap.map_file) 
 
 def get_beatmapset_path_by_string(target_string: str) -> str | None:

@@ -40,7 +40,7 @@ def main():
 
         print(len(sheet), replay_number)
         column = sheet[replay_number]
-        if column["posted"] or column["approved"] is False:
+        if column["posted"] or column["approved"] is False or column["done"]:
             continue
         
         if program_args.record:

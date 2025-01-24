@@ -46,6 +46,13 @@ def read_int_double(buffer: BufferedReader):
     double = read_double(buffer)
     return (integer, double)
 
+def read_int_float(buffer: BufferedReader):
+    read_ubyte(buffer)
+    integer = read_uint(buffer)
+    read_ubyte(buffer)
+    double = read_float(buffer)
+    return (integer, double)
+
 def read_timing_point(buffer: BufferedReader):
     bpm = read_double(buffer)
     offset = read_double(buffer)

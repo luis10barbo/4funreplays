@@ -7,5 +7,5 @@ def record(config: Config, replay_path: str, output_name: str, skin: str):
     if config is None:
         return
     
-    record_command = f"{os.path.join(config["danser_path"], "danser-cli.exe")} -record -settings {config["danser_config"]} -replay {replay_path} -out {output_name} -skin \"{skin}\""
+    record_command = f"{os.path.join(config["danser_path"], "danser-cli.exe")} --skip -record -settings {config["danser_config"]} -replay \"{replay_path}\" -out \"{output_name}\" -skin \"{skin}\""
     system_execute(record_command)

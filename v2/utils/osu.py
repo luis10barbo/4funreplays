@@ -96,7 +96,7 @@ def get_desc(replay_data: Replay, sheet_data: ColumnSheetObr):
     if sheet_data["sliderbreaks"] and sheet_data["sliderbreaks"] > 0:
         return f"{sheet_data["sliderbreaks"]}sb"
     elif replay_data.count_miss > 0:
-        return f"{replay_data.count_miss}x"
+        return f"{replay_data.count_miss}❌"
     else:
         return ""
     
