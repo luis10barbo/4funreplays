@@ -3,3 +3,4 @@ secrets/
 config.json
 replays
 replays/*
+test.py
