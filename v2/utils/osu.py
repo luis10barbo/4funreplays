@@ -47,7 +47,7 @@ def get_mods(replay_data: Replay):
     
     replay_mods_string = ""
     for mod in mods:
-        if mod is "Doubletime" or "Nightcore" or "HardRock":
+        if mod is "DoubleTime" or mod is "NightCore" or mod is "HardRock":
             continue
         replay_mods_string += mods_simplified[mod]
 
