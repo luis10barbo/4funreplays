@@ -38,7 +38,7 @@ def parse_sheets_obr():
             "approved": True if column[6] == "TRUE" else False,
             "done": True if column[7] == "TRUE" else False,
             "posted": True if column[8] == "TRUE" else False,
-            "o_que_seria": column[9],
+            "o_que_seria": "",
             "sliderbreaks": None
         }
         columnsObr.append(columnObr)
