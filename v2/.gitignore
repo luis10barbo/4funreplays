@@ -4,3 +4,4 @@ config.json
 replays
 replays/*
 test.py
+test_replay.osr
