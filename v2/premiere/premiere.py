@@ -144,7 +144,7 @@ def default_edit(video_path:str, output_name:str):
     #             case "combo":
     #                 prop.setValue(f"{combo}x combo", True)
     
-    output_path = os.path.join(PATH_PREMIERE_FOLDER_OUT, f"{output_name}.mp4".replace("?", ""))
+    output_path = os.path.join(PATH_PREMIERE_FOLDER_OUT, f"{output_name}.mp4".replace("?", "").replace(":", "_"))
     
     try:
         logger.info("Rendering video")

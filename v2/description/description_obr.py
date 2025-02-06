@@ -29,9 +29,9 @@ Danser: https://github.com/Wieku/danser-go"""
     content = f"""{video_title}
 {video_description}"""
     
-    file_name = f"{replay_number} - {nickname} {map_data.song_title} [{map_data.difficulty}]".replace("\"", "").replace("'", "").replace("/", "")
+    file_name = f"{replay_number} - {nickname} {map_data.song_title}".replace("\"", "").replace("'", "").replace("/", "").replace("?", "_").replace(":", "").replace(".", "")
 
-    description_path = os.path.join(PATH_DESCRIPTION_FOLDER_FILES, f"{file_name if file_name_as_title else replay_number}.txt").replace("?", "_")
+    description_path = os.path.join(PATH_DESCRIPTION_FOLDER_FILES, f"{file_name if file_name_as_title else replay_number}.txt")
     with open(description_path, "w", encoding="utf-8") as file:
         file.write(content)
     

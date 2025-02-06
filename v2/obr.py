@@ -61,7 +61,7 @@ def main():
             pp_data = performance.calculate(rosu_map)
             
             map_data = osu_db.beatmaps[parsed_replay.beatmap_hash]
-            video_title =  f"{replay_number} - {parsed_replay.username} {map_data.song_title} [{map_data.difficulty}]".replace("\"", "").replace("'", "").replace("/", "")
+            video_title =  f"{replay_number} - {parsed_replay.username} {map_data.song_title}".replace("\"", "").replace("'", "").replace("/", "").replace("?", "_").replace(":", "").replace(".", "")
             video_title_with_actual_nickname = None
             if program_args.description:
                 video_title_with_actual_nickname = save_description_obr(browser, column, parsed_replay, pp_data, osu_db.beatmaps[parsed_replay.beatmap_hash], replay_number, True)

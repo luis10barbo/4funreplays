@@ -18,7 +18,7 @@ def parse_sheets_string():
     
 def parse_sheets_obr():
     parsed_columns = parse_sheets_string()
-    if parsed_columns is None or len(parsed_columns) < 2:
+    if parsed_columns is None or len(parsed_columns) < 1:
         return None
     
     columnsObr: list[ColumnSheetObr] = []
@@ -46,4 +46,3 @@ def parse_sheets_obr():
     
     debug(f"Parsed {len(columnsObr)} columns")
     return columnsObr
-        
